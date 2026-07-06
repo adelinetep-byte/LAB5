@@ -75,4 +75,23 @@ public class MyDBHandler extends SQLiteOpenHelper {
         db.close();
         return result;
     }
+
+    // --- Nouvelle méthode ajoutée pour le Lab 8 : l'opération Update (le U de CRUD) ---
+    public boolean updateProduct(Product product) {
+        boolean result = false;
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "Select * FROM " + TABLE_PRODUCTS + " WHERE "
+                + COLUMN_PRODUCTNAME + " = \"" + product.getProductName() + "\"";
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            String idStr = cursor.getString(0);
+            ContentValues values = new ContentValues();
+            values.put(COLUMN_SKU, product.getSku());
+            db.update(TABLE_PRODUCTS, values, COLUMN_ID + " = " + idStr, null);
+            cursor.close();
+            result = true;
+        }
+        db.close();
+        return result;
+    }
 }
