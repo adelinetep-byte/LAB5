@@ -1,0 +1,16 @@
+package com.example.lab5;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
+public class ProductValidatorTest {
+
+    @Test
+    public void skuMustBePositive() {
+        assertFalse(ProductValidator.isValidSku(0));
+        assertFalse(ProductValidator.isValidSku(-42));
+        assertTrue(ProductValidator.isValidSku(1001));
+    }
+}

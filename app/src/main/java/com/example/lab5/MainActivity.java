@@ -42,14 +42,20 @@ public class MainActivity extends AppCompatActivity {
 
         int sku = Integer.parseInt(skuBox.getText().toString());
 
+        if (!ProductValidator.isValidSku(sku)) {
+            idView.setText("Invalid SKU: must be positive");
+            return;
+        }
+
         Product product = new Product(productBox.getText().toString(), sku);
 
         // TODO: add to database
 
         MyDBHandler dbHandler = new MyDBHandler(this);
         dbHandler.addProduct(product);
+        productBox.setText("");
+        skuBox.setText("");
     }
-
 
     public void lookupProduct (View view) {
 
@@ -79,7 +85,26 @@ public class MainActivity extends AppCompatActivity {
         else
             idView.setText("No Match Found");
     }
+    public void updateProduct (View view) {
 
+        int sku = Integer.parseInt(skuBox.getText().toString());
+
+        if (!ProductValidator.isValidSku(sku)) {
+            idView.setText("Invalid SKU: must be positive");
+            return;
+        }
+
+        Product product = new Product(productBox.getText().toString(), sku);
+
+        MyDBHandler dbHandler = new MyDBHandler(this);
+        boolean result = dbHandler.updateProduct(product);
+
+        if (result) {
+            idView.setText("Record Updated");
+        }
+        else
+            idView.setText("No Match Found");
+    }
 
     public void about(View view) {
         Intent aboutIntent = new Intent(this, About.class);
