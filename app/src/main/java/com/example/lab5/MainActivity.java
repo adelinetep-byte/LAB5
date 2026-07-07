@@ -40,7 +40,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void newProduct (View view) {
 
-        int sku = Integer.parseInt(skuBox.getText().toString());
+        int sku;
+        try {
+            sku = Integer.parseInt(skuBox.getText().toString());
+        } catch (NumberFormatException e) {
+            idView.setText("Invalid SKU: please enter a number");
+            return;
+        }
 
         if (!ProductValidator.isValidSku(sku)) {
             idView.setText("Invalid SKU: must be positive");
@@ -56,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
         productBox.setText("");
         skuBox.setText("");
     }
-
     public void lookupProduct (View view) {
 
         // TODO: get from Database
@@ -87,7 +92,13 @@ public class MainActivity extends AppCompatActivity {
     }
     public void updateProduct (View view) {
 
-        int sku = Integer.parseInt(skuBox.getText().toString());
+        int sku;
+        try {
+            sku = Integer.parseInt(skuBox.getText().toString());
+        } catch (NumberFormatException e) {
+            idView.setText("Invalid SKU: please enter a number");
+            return;
+        }
 
         if (!ProductValidator.isValidSku(sku)) {
             idView.setText("Invalid SKU: must be positive");
